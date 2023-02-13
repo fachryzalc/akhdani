@@ -23,7 +23,9 @@
 <body class="bg-gradient-primary">
 
     <div class="container">
-
+        <div class="title" data-title="<?= session()->getFlashdata('title'); ?>"></div>
+        <div class="text" data-text="<?= session()->getFlashdata('text'); ?>"></div>
+        <div class="icon" data-icon="<?= session()->getFlashdata('icon'); ?>"></div>
         <!-- Outer Row -->
         <div class="row justify-content-center">
 
@@ -59,14 +61,17 @@
                                             </div>
                                         </div>
                                         <div class="input-group mb-4">
-                                            <input type="password " class="form-control <?= (validation_show_error('passwordv')) ? 'is-invalid' : ''; ?>" id="passwordv" name="passwordv" placeholder="Konfirmasi Password">
+                                            <input type="password" class="form-control <?= (validation_show_error('passwordv')) ? 'is-invalid' : ''; ?>" id="passwordv" name="passwordv" placeholder="Konfirmasi Password">
                                             <div class="invalid-feedback">
                                                 <?= validation_show_error('passwordv') ?>
                                             </div>
                                         </div>
                                         <button class="btn btn-primary btn-user btn-block" type="submit">Register</button>
                                     </form>
-
+                                    <hr>
+                                    <div class="text-center">
+                                        <a class="small" href="/auth/login">Login</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>

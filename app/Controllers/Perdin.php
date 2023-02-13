@@ -54,48 +54,6 @@ class Perdin extends BaseController
 
     public function simpan()
     {
-        $id_user = $this->request->getVar('id_user');
-        $lama = $this->request->getVar('lama');
-
-        $dataUser = $this->userModel->getUser($id_user);
-        $asal = $this->kotaModel->getKota($this->request->getVar('asal'));
-        $tujuan = $this->kotaModel->getKota($this->request->getVar('tujuan'));
-        $jarak = $this->jarak($asal['latitude'], $asal['longitude'], $tujuan['latitude'], $tujuan['longitude']);
-
-        if ($tujuan['luar'] == 1) {
-            $saku = [
-                'total' => $lama * 50,
-                'matauang' => '$ '
-            ];
-        } else {
-            if ($jarak <= 60) {
-                $saku = [
-                    'total' => 0,
-                    'matauang' => 'Rp. '
-                ];
-            } else {
-                if ($jarak >= 60 && $asal['provinsi'] == $tujuan['provinsi']) {
-                    dd($asal['provinsi'] == $tujuan['provinsi']);
-                    $saku = [
-                        'total' => (int)200000 * (int)$lama,
-                        'matauang' => 'Rp. '
-                    ];
-                } else {
-                    if ($jarak >= 60 && $asal['provinsi'] != $tujuan['provinsi'] && $asal['pulau'] == $tujuan['pulau']) {
-                        $saku = [
-                            'total' => (int)250000 * (int)$lama,
-                            'matauang' => 'Rp. '
-                        ];
-                    } else {
-                        $saku = [
-                            'total' => (int)300000 * (int)$lama,
-                            'matauang' => 'Rp. '
-                        ];
-                    }
-                }
-            }
-        }
-
         $validation = \Config\Services::validation();
         if (!$this->validate([
             'asal' => [
@@ -132,24 +90,72 @@ class Perdin extends BaseController
             return redirect()->to('perdin/tambah')->withInput()->with('validation', $validation);
         }
 
-        $this->perdinModel->save([
-            'id_user' => $dataUser['id'],
-            'nama' => $dataUser['nama'],
-            'asal' => $asal['nama'],
-            'tujuan' => $tujuan['nama'],
-            'berangkat' => $this->request->getVar('berangkat'),
-            'pulang' => $this->request->getVar('pulang'),
-            'keterangan' => $this->request->getVar('keterangan'),
-            'jarak' => $jarak,
-            'saku' => $saku['matauang'] . $saku['total'],
-            'lama' => $lama,
-            'status' => 2
-        ]);
 
-        session()->setFlashdata('title', 'Sukses');
-        session()->setFlashdata('text', 'Berhasil Mengajukan Perjalanan Dinas');
+        $id_user = $this->request->getVar('id_user');
+        $lama = $this->request->getVar('lama');
 
-        return redirect()->to(site_url('perdin/pegawai/' . $dataUser['id']));
+        if ($lama >= 0) {
+            $dataUser = $this->userModel->getUser($id_user);
+            $asal = $this->kotaModel->getKota($this->request->getVar('asal'));
+            $tujuan = $this->kotaModel->getKota($this->request->getVar('tujuan'));
+            $jarak = $this->jarak($asal['latitude'], $asal['longitude'], $tujuan['latitude'], $tujuan['longitude']);
+            if ($tujuan['luar'] == 1) {
+                $saku = [
+                    'total' => $lama * 50,
+                    'matauang' => '$ '
+                ];
+            } else {
+                if ($jarak <= 60) {
+                    $saku = [
+                        'total' => 0,
+                        'matauang' => 'Rp. '
+                    ];
+                } else {
+                    if ($jarak >= 60 && $asal['provinsi'] == $tujuan['provinsi']) {
+                        dd($asal['provinsi'] == $tujuan['provinsi']);
+                        $saku = [
+                            'total' => (int)200000 * (int)$lama,
+                            'matauang' => 'Rp. '
+                        ];
+                    } else {
+                        if ($jarak >= 60 && $asal['provinsi'] != $tujuan['provinsi'] && $asal['pulau'] == $tujuan['pulau']) {
+                            $saku = [
+                                'total' => (int)250000 * (int)$lama,
+                                'matauang' => 'Rp. '
+                            ];
+                        } else {
+                            $saku = [
+                                'total' => (int)300000 * (int)$lama,
+                                'matauang' => 'Rp. '
+                            ];
+                        }
+                    }
+                }
+            }
+            $this->perdinModel->save([
+                'id_user' => $dataUser['id'],
+                'nama' => $dataUser['nama'],
+                'asal' => $asal['nama'],
+                'tujuan' => $tujuan['nama'],
+                'berangkat' => $this->request->getVar('berangkat'),
+                'pulang' => $this->request->getVar('pulang'),
+                'keterangan' => $this->request->getVar('keterangan'),
+                'jarak' => $jarak,
+                'saku' => $saku['matauang'] . $saku['total'],
+                'lama' => $lama,
+                'status' => 2
+            ]);
+
+            session()->setFlashdata('title', 'Sukses');
+            session()->setFlashdata('text', 'Berhasil Mengajukan Perjalanan Dinas');
+
+            return redirect()->to(site_url('perdin/pegawai/' . $dataUser['id']));
+        } else {
+            session()->setFlashdata('icon', 'error');
+            session()->setFlashdata('title', 'Gagal');
+            session()->setFlashdata('text', 'Data yang dimasukkan salah');
+            return redirect()->to('perdin/tambah')->withInput();
+        }
     }
 
 

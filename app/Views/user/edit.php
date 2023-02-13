@@ -8,14 +8,14 @@
             <form action="/user/update/<?= $dataUser['id']; ?>" method="post">
                 <div class="col-md-12">
                     <label class="form-label">Nama Lengkap</label>
-                    <input type="text" name="nama" class="form-control <?= (validation_show_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Lengkap" autofocus value="<?= (old('nama')) ? old('nama') : $dataUser['nama'] ?>">
+                    <input type="text" name="nama" class="form-control <?= (validation_show_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Lengkap" autofocus value="<?= (old('nama')) ? old('nama') : $dataUser['nama'] ?>" <?= ($dataUser['akses'] != 1) ? 'disabled' : ''; ?>>
                     <div class="invalid-feedback">
                         <?= validation_show_error('nama') ?>
                     </div>
                 </div>
                 <div class="col-md-12 mt-3">
                     <label class="form-label">Username</label>
-                    <input type="text" class="form-control <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?= (old('username')) ? old('username') : $dataUser['username'] ?>">
+                    <input type="text" class="form-control <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?= (old('username')) ? old('username') : $dataUser['username'] ?>" <?= ($dataUser['akses'] != 1) ? 'disabled' : ''; ?>>
                     <div class="invalid-feedback">
                         <?= validation_show_error('username') ?>
                     </div>

@@ -23,7 +23,9 @@
 <body class="bg-gradient-primary">
 
     <div class="container">
-
+        <div class="title" data-title="<?= session()->getFlashdata('title'); ?>"></div>
+        <div class="text" data-text="<?= session()->getFlashdata('text'); ?>"></div>
+        <div class="icon" data-icon="<?= session()->getFlashdata('icon'); ?>"></div>
         <!-- Outer Row -->
         <div class="row justify-content-center">
 

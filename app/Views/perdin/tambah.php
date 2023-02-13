@@ -98,6 +98,12 @@
         if (hari >= 0) {
             document.getElementById('hari').innerHTML = '' + d + ' Hari'
             $('#lama').val(d)
+        } else {
+            swal({
+                title: "Gagal",
+                text: "Hari yang dimasukkan salah",
+                icon: "error"
+            })
         }
     })
     $('#berangkat').on('change', function(e) {

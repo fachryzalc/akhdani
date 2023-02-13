@@ -22,14 +22,16 @@
     <script src="<?= base_url('http://localhost:8080/assets'); ?>/vendor/jquery/jquery.min.js"></script>
     <script src="<?= base_url('http://localhost:8080/assets'); ?>/vendor/datatables/jquery.dataTables.min.js"></script>
     <script src="<?= base_url('http://localhost:8080/assets'); ?>/vendor/datatables/dataTables.bootstrap4.min.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 
 <body id="page-top">
 
     <!-- Page Wrapper -->
     <div id="wrapper">
-
+        <div class="title" data-title="<?= session()->getFlashdata('title'); ?>"></div>
+        <div class="text" data-text="<?= session()->getFlashdata('text'); ?>"></div>
+        <div class="icon" data-icon="<?= session()->getFlashdata('icon'); ?>"></div>
         <?= $this->include('layout/sidebar'); ?>
 
         <!-- Content Wrapper -->
@@ -89,7 +91,30 @@
 
 <!-- Custom scripts for all pages-->
 <script src="<?= base_url('http://localhost:8080/assets'); ?>/js/sb-admin-2.min.js"></script>
+<script src=https://unpkg.com/sweetalert/dist/sweetalert.min.js></script>
+<script>
+    const flashTitle = $('.title').data('title');
+    const flashText = $('.text').data('text');
+    const flashIcon = $('.icon').data('icon');
+    var ic = null;
 
+    if (flashIcon) {
+        ic = $('.icon').data('icon')
+    } else {
+        ic = 'success'
+    }
+
+    if (flashTitle) {
+        swal({
+            title: flashTitle,
+            text: flashText,
+            icon: ic
+        })
+        ic = null;
+    } else {
+        ic = null;
+    }
+</script>
 
 
 </html>
