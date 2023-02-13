@@ -95,9 +95,9 @@
         const berangkat = new Date(document.getElementById('berangkat').value)
         const hari = Math.trunc(pulang - berangkat)
         const d = hari / (1000 * 3600 * 24)
-        if (hari >= 0) {
-            document.getElementById('hari').innerHTML = '' + d + ' Hari'
-            $('#lama').val(d)
+        if (d >= 0) {
+            document.getElementById('hari').innerHTML = '' + (d == 0 ? d + 1 : d) + ' Hari'
+            $('#lama').val((d == 0 ? d + 1 : d))
         } else {
             swal({
                 title: "Gagal",
@@ -111,9 +111,9 @@
         const berangkat = new Date(document.getElementById('berangkat').value)
         const hari = Math.trunc(pulang - berangkat)
         const d = hari / (1000 * 3600 * 24)
-        if (hari >= 0) {
-            document.getElementById('hari').innerHTML = '' + d + ' Hari'
-            $('#lama').val(d)
+        if (d >= 0) {
+            document.getElementById('hari').innerHTML = '' + (d == 0 ? d + 1 : d) + ' Hari'
+            $('#lama').val((d == 0 ? d + 1 : d))
         }
     })
 </script>

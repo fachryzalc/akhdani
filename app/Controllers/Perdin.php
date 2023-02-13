@@ -99,6 +99,9 @@ class Perdin extends BaseController
             $asal = $this->kotaModel->getKota($this->request->getVar('asal'));
             $tujuan = $this->kotaModel->getKota($this->request->getVar('tujuan'));
             $jarak = $this->jarak($asal['latitude'], $asal['longitude'], $tujuan['latitude'], $tujuan['longitude']);
+            if ($lama == 0) {
+                $lama = $lama + 1;
+            }
             if ($tujuan['luar'] == 1) {
                 $saku = [
                     'total' => $lama * 50,
@@ -181,7 +184,7 @@ class Perdin extends BaseController
 
         $data = [
             'title' => 'Detail PerdinKu',
-            'sidebar' => 'baru',
+            'sidebar' => 'history',
             'dataPerdin' => $dataPerdin,
             'badge' => count($this->perdinModel->dataperdinApprove(2))
         ];
@@ -205,7 +208,7 @@ class Perdin extends BaseController
         ]);
 
         session()->setFlashdata('title', 'Sukses');
-        session()->setFlashdata('text', 'Berhasil Approve Perjalanan Dinas' . $dataPerdin['nama']);
+        session()->setFlashdata('text', 'Berhasil Approve Perjalanan Dinas ' . $dataPerdin['nama']);
         return redirect('perdin/sdm', $data);
     }
 
@@ -225,7 +228,7 @@ class Perdin extends BaseController
         ]);
 
         session()->setFlashdata('title', 'Sukses');
-        session()->setFlashdata('text', 'Berhasil Reject Perjalanan Dinas' . $dataPerdin['nama']);
+        session()->setFlashdata('text', 'Berhasil Reject Perjalanan Dinas ' . $dataPerdin['nama']);
         return redirect('perdin/sdm', $data);
     }
 
