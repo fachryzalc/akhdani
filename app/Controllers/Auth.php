@@ -36,9 +36,9 @@ class Auth extends BaseController
     {
         $post = $this->request->getPost();
         $user = $this->userModel->dataUsername($post['username']);
-        $user = $user[0];
 
         if ($user) {
+            $user = $user[0];
             if ($post['password'] == $user['password']) {
                 $params = [
                     "id" => $user['id'],
@@ -62,8 +62,9 @@ class Auth extends BaseController
                 return redirect()->back()->withInput();
             }
         } else {
-            session()->setFlashdata("username", "Masukkan username yang sesuai");
-            session()->setFlashdata("password", "Masukkan password");
+            session()->setFlashdata('title', 'Gagal');
+            session()->setFlashdata('icon', 'error');
+            session()->setFlashdata('text', 'Data yang dimasukkan salah');
 
             return redirect()->back()->withInput();
         }

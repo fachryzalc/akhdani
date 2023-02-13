@@ -17,7 +17,7 @@
 
     <!-- Custom styles for this template-->
     <link href="<?= base_url('http://localhost:8080/assets'); ?>/css/sb-admin-2.min.css" rel="stylesheet">
-
+    <script src=https://unpkg.com/sweetalert/dist/sweetalert.min.js></script>
 </head>
 
 <body class="bg-gradient-primary">
@@ -94,6 +94,30 @@
     <!-- Custom scripts for all pages-->
     <script src="<?= base_url('http://localhost:8080/assets'); ?>/js/sb-admin-2.min.js"></script>
 
+
 </body>
+<script>
+    const flashTitle = $('.title').data('title');
+    const flashText = $('.text').data('text');
+    const flashIcon = $('.icon').data('icon');
+    var ic = null;
+
+    if (flashIcon) {
+        ic = $('.icon').data('icon')
+    } else {
+        ic = 'success'
+    }
+
+    if (flashTitle) {
+        swal({
+            title: flashTitle,
+            text: flashText,
+            icon: ic
+        })
+        ic = null;
+    } else {
+        ic = null;
+    }
+</script>
 
 </html>
