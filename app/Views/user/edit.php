@@ -6,16 +6,16 @@
         <div class="card-body">
 
             <form action="/user/update/<?= $dataUser['id']; ?>" method="post">
-                <div class="col-md-12">
+                <div class="col-md-12" <?= ($dataUser['akses'] != 1) ? 'hidden' : ''; ?>>
                     <label class="form-label">Nama Lengkap</label>
-                    <input type="text" name="nama" class="form-control <?= (validation_show_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Lengkap" autofocus value="<?= (old('nama')) ? old('nama') : $dataUser['nama'] ?>" <?= ($dataUser['akses'] != 1) ? 'disabled' : ''; ?>>
+                    <input type="text" name="nama" class="form-control <?= (validation_show_error('nama')) ? 'is-invalid' : ''; ?>" placeholder="Nama Lengkap" autofocus value="<?= (old('nama')) ? old('nama') : $dataUser['nama'] ?>">
                     <div class="invalid-feedback">
                         <?= validation_show_error('nama') ?>
                     </div>
                 </div>
-                <div class="col-md-12 mt-3">
+                <div class="col-md-12 mt-3" <?= ($dataUser['akses'] != 1) ? 'hidden' : ''; ?>>
                     <label class="form-label">Username</label>
-                    <input type="text" class="form-control <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?= (old('username')) ? old('username') : $dataUser['username'] ?>" <?= ($dataUser['akses'] != 1) ? 'disabled' : ''; ?>>
+                    <input type="text" class="form-control <?= (validation_show_error('username')) ? 'is-invalid' : ''; ?>" name="username" placeholder="Username" value="<?= (old('username')) ? old('username') : $dataUser['username'] ?>">
                     <div class="invalid-feedback">
                         <?= validation_show_error('username') ?>
                     </div>

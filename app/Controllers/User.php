@@ -105,7 +105,9 @@ class User extends BaseController
     public function update($id)
     {
         $dataUser = $this->userModel->getUser($id);
-        if ($dataUser['username'] == $this->request->getVar('username')) {
+        $oldUsername = $this->request->getVar('username');
+
+        if ($dataUser['username'] == $oldUsername) {
             $rules_username = 'required|max_length[150]';
         } else {
             $rules_username = 'required|max_length[150]|is_unique[user.username]';
@@ -130,7 +132,6 @@ class User extends BaseController
         ])) {
             return redirect()->to('/user/edit/' . $id)->withInput()->with('validation', $validation);
         }
-
         $this->userModel->save([
             'id' => $id,
             'nama' => $this->request->getVar('nama'),
